@@ -1,0 +1,7 @@
+1. git pull from master
+2. git branch <branch_name> to create new branch (usually feature specific)
+3. git checkout <branch_name> to check out branch
+4. git branch to see which branch is checked out
+5. git add ., git commit, git push -u <remote_name> <branch_name>
+6. Go to pull requests from git, resolve conflicts, review code, merge branch into master.
+7. Repeat
