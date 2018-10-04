@@ -28,7 +28,7 @@
                     <input class="form-control" type="text" name="city" id="city"><br>
                     <label for="state">State:</label>
                     <select name="state" id="state">
-                        <option value="0">Choose</option>
+                        <option value="">Choose</option>
                         {% for state in state %}
                             <option value="{{state.id}}">{{state.name}}</option>
                         {% endfor %}
