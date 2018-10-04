@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.devs',  # Added this line for devs app
+    'apps.orgs',  # Added this line for orgs app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
