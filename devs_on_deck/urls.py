@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^', include('apps.orgs.urls', namespace="index")),
     url(r'^devs/', include('apps.devs.urls', namespace="devs")),
     url(r'^orgs/', include('apps.orgs.urls', namespace="orgs")),
+    url(r'^state/', include('apps.state.urls', namespace="state")),
 ]

@@ -12,7 +12,7 @@ def index(request):
 
     if 'logged_in_status' not in request.session:
         return redirect('orgs:register')
-
+    # return render(request, 'orgs/register.html')
 
 def register(request):
     return render(request, 'orgs/register.html')

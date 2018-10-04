@@ -1,0 +1,18 @@
+{% extends "./layout.html" %}
+{% block body %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <a href="{% url 'devs:index' %}" class="button">Back</a>
+    <h1>Add State</h1>
+    <form action="{% url 'state:create'%}" method="post">
+    {% csrf_token %}
+        <input type="text" name="state">
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
+

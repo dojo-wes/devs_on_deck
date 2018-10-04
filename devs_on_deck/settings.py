@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'apps.devs',  # Added this line for devs app
     'apps.orgs',  # Added this line for orgs app
+    'apps.state',# Added this line for state app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

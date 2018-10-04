@@ -4,21 +4,38 @@
 {% endblock %}
 {% block body %}
 <!-- Registration page HTML forms go here -->
+{% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <div class="row">
+            <a href="{% url 'state:index'%}" class='button'>Add state</a>
             <form action="{% url 'devs:create' %}" method="POST">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="first_name">First name:</label>
                     <input class="form-control" type="text" name="first_name" id="first_name">
                     <label for="last_name">Last name:</label>
                     <input class="form-control" type="text" name="last_name" id="last_name">
-                    <label for="email"Email:</label>
+                    <label for="email">Email:</label>
                     <input class="form-control" type="text" name="email" id="email">
                     <label for="address1">Address:</label>
                     <input class="form-control" type="text" name="address1" id="address1">
                     <label for="city">City:</label>
-                    <input class="form-control" type="text" name="city" id="city">
+                    <input class="form-control" type="text" name="city" id="city"><br>
                     <label for="state">State:</label>
-                    <input class="form-control" type="text" name="state" id="state">
+                    <select name="state" id="state">
+                        <option value="0">Choose</option>
+                        {% for state in state %}
+                            <option value="{{state.id}}">{{state.name}}</option>
+                        {% endfor %}
+                    </select><br>
+
+
+
                     <label for="password">Password:</label>
                     <input class="form-control" type="password" name="password" id="password">
                     <label for="confirm_password">Confirm Password:</label>
