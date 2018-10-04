@@ -1,0 +1,15 @@
+.strong {
+    font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.red, .error, .messages {
+  color: red;
+}
+
+.green, .success {
+    color: green;
+}
