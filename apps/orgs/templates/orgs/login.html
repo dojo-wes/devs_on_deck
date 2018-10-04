@@ -1,0 +1,18 @@
+{% extends './layout.html' %}
+{% block title %}Organization Login{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+<!-- Login page HTML forms go here -->
+        <div class="row">
+            <form action="{% url 'orgs:loginprocess' %}" method="POST">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="text" name="email" id="email">
+                    <label for="password">Password:</label>
+                    <input class="form-control" type="password" name="password" id="password">
+                    <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Login">Login</button>
+                </div>
+            </form>
+        </div>
+{% endblock %}
