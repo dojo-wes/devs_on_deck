@@ -43,6 +43,28 @@ class DeveloperManager(models.Manager):
             created=self.create(first_name=form['first_name'], last_name=form['last_name'],address=form['address1'],city=form['city'], state=State.object.get(id=form['state']),email=form['email'], password=hash1)
             return created
 
+    def login_validation(self, form_data):
+
+        email = form_data['email']
+        password = form_data['password']
+        error = []
+
+        if len(email) == 0 or len(password) == 0:
+            error.append("Invalid Email or Password")
+            return error
+
+        user = self.filter(email=email)
+        if len(user) == 0:
+            error.append("Invalid Email or Password")
+            return error
+
+        user1 = user[0]
+        if not bcrypt.checkpw(password.encode(), user1.password.encode()):
+            error.append("Invalid Email or Password")
+            return error
+        else:
+            return user1.id
+
 class Developer(models.Model):
     first_name=models.CharField(max_length=255)
     last_name=models.CharField(max_length=255)

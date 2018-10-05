@@ -35,5 +35,24 @@ def login(request):
     return render(request, 'devs/login.html')
 
 def loginprocess(request):
-    # if request.method == 'POST':
-    pass
+    if request.method == 'POST':
+        error = Developer.object.login_validation(request.POST)
+        if type(error) == list:
+            for err in error:
+                messages.error(request, err)
+            return redirect("devs:login")
+        else:
+            user_id = error
+            print user_id
+            return render(request, "devs/developers.html",)
+    else:
+        if "user_id" in request.session:
+            return render(request, "devs/developers.html",)
+        return redirect("devs:register")
+
+def logout(request):
+    if request.method == "POST":
+        request.session.clear()
+        return redirect("devs:index")
+    else:
+        return render(request, "devs/developers.html")

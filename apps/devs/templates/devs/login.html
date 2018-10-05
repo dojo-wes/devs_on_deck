@@ -4,8 +4,20 @@
 {% endblock %}
 {% block body %}
 <!-- Login page HTML forms go here -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+         <h1>Welcome Back, Developer!</h1>
+        <h3>Lets onnect You To A Job</h3>
+        <a href="{% url 'devs:register'%}">Dev Registration</a>&nbsp&nbsp&nbsp&nbsp
+        <a href="{% url 'orgs:register'%}">Org Registration</a>
         <div class="row">
             <form action="{% url 'devs:loginprocess' %}" method="POST">
+            {% csrf_token %}
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input class="form-control" type="text" name="email" id="email">

@@ -4,8 +4,17 @@
 {% endblock %}
 {% block body %}
 <!-- Registration page HTML forms go here -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h1>Organization Sign Up</h1>
         <div class="row">
             <form action="{% url 'orgs:create' %}" method="POST">
+            {% csrf_token %}
                 <div class="form-group">
                     <label for="org_name">Org name:</label>
                     <input class="form-control" type="text" name="org_name" id="org_name">
@@ -18,16 +27,24 @@
                     <label for="address1">Address:</label>
                     <input class="form-control" type="text" name="address1" id="address1">
                     <label for="city">City:</label>
-                    <input class="form-control" type="text" name="city" id="city">
+                    <input class="form-control" type="text" name="city" id="city"><br>
                     <label for="state">State:</label>
-                    <input class="form-control" type="text" name="state" id="state">
+                    <select name="state" id="state">
+                        <option value="">Choose</option>
+                        {% for state in state %}
+                            <option value="{{state.id}}">{{state.name}}</option>
+                        {% endfor %}
+                    </select><br>
                     <label for="password">Password:</label>
                     <input class="form-control" type="password" name="password" id="password">
                     <label for="confirm_password">Confirm Password:</label>
-                    <input class="form-control" type="confirm_password" name="confirm_password" id="confirm_password">
+                    <input class="form-control" type="password" name="confirm_password" id="confirm_password">
                     <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Register">Register</button>
                 </div>
             </form>
+            <a href="{% url 'devs:register' %}">Need to Sign up on Developer</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+            <a href="{% url 'devs:login' %}">Dev Login</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+            <a href="{% url 'orgs:login' %}">Org Login</a>
         </div>
 {% endblock %}
 {% block footer %}

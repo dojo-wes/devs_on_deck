@@ -1,0 +1,9 @@
+{% extends "./layout.html" %}
+{% block body %}
+<h1>hello</h1>
+    <form action="{% url 'devs:logout' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+    </form>
+{% endblock %}
+

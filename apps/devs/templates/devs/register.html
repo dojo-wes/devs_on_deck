@@ -11,8 +11,8 @@
                 {% endfor %}
             </ul>
         {% endif %}
+        <h1>Developer Sign Up</h1>
         <div class="row">
-            <a href="{% url 'state:index'%}" class='button'>Add state</a>
             <form action="{% url 'devs:create' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
@@ -40,6 +40,11 @@
                     <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Register">Register</button>
                 </div>
             </form>
+            <a href="{% url 'orgs:register' %}">Need to Sign up on Organization</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+            <a href="{% url 'state:index'%}" class='button'>Add state</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+            <a href="{% url 'devs:login' %}" class='button'>Dev Login</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+            <a href="{% url 'orgs:login' %}" class='button'>Org Login</a>
+
         </div>
 {% endblock %}
 {% block footer %}
