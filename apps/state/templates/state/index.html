@@ -1,6 +1,7 @@
 {% extends "./layout.html" %}
 {% block body %}
         <div class="row">
+            <a href="{% url 'devs:index' %}" class="btn btn-link">Back</a>
             {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
@@ -8,13 +9,14 @@
                     {% endfor %}
                 </ul>
             {% endif %}
-            <a href="{% url 'devs:index' %}" class="btn btn-link">Back</a>
+        </div>
+        <div class="row">
             <h1>Add State</h1>
             <form action="{% url 'state:create'%}" method="post">
             {% csrf_token %}
                 <div class="form-group">
                     <input class="form-control" type="text" name="state">
-                    <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Submit">Login</button>
+                    <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Submit">Submit</button>
                 </div>
             </form>
         </div>
