@@ -45,7 +45,7 @@
                             <label for="state">State:</label>
                             <select name="state" id="state">
                                 <option value="">Choose</option>
-                                {% for state in state %}
+                                {% for state in state|dictsort:"name" %}
                                     <option value="{{state.id}}">{{state.name}}</option>
                                 {% endfor %}
                             </select><br>
