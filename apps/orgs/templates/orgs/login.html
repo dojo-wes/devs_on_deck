@@ -3,19 +3,24 @@
 {% block head %}
 {% endblock %}
 {% block body %}
-<!-- Login page HTML forms go here -->
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
+        <div class="row header-title">
+            <h2>DevsOnDeck</h2>
+            <ul class="topnav">
+                <li><a href="{% url 'devs:register'%}" class="btn-link" title="Dev Registration">Dev Registration</a></li>
+                <li><a href="{% url 'orgs:register' %}" class='btn-link' title="Org Registration">Org Registration</a></li>
             </ul>
-        {% endif %}
-        <h1>Welcome Back!</h1>
-        <h3>Lets Find You Some Candidates</h3>
-        <a href="{% url 'devs:register'%}">Dev Registration</a>&nbsp&nbsp&nbsp&nbsp
-        <a href="{% url 'orgs:register'%}">Org Registration</a>
-        <div class="row">
+        </div>
+        <div class="row body">
+            <!-- Login page HTML forms go here -->
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <h1>Welcome Back!</h1>
+            <h3>Let's Find You Some Candidates</h3>
             <form action="{% url 'orgs:loginprocess' %}" method="POST">
             {% csrf_token %}
                 <div class="form-group">

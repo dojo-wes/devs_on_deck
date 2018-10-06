@@ -3,48 +3,69 @@
 {% block head %}
 {% endblock %}
 {% block body %}
-<!-- Registration page HTML forms go here -->
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
+        <div class="row header-title">
+            <h2>DevsOnDeck</h2>
+            <ul class="topnav">
+                <li><a class="btn-link" href="{% url 'devs:login' %}" title="Dev Login">Dev Login</a></li>
+                <li><a class="btn-link" href="{% url 'orgs:login' %}" title="Org Login">Org Login</a></li>
             </ul>
-        {% endif %}
-        <h1>Organization Sign Up</h1>
-        <div class="row">
-            <form action="{% url 'orgs:create' %}" method="POST">
+        </div>
+        <div class="row body">
+            <h1>Organization Sign Up</h1>
+            <!-- Registration page HTML forms go here -->
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form class="customform" action="{% url 'orgs:create' %}" method="POST">
             {% csrf_token %}
                 <div class="form-group">
-                    <label for="org_name">Org name:</label>
-                    <input class="form-control" type="text" name="org_name" id="org_name">
-                    <label for="first_name">First name:</label>
-                    <input class="form-control" type="text" name="first_name" id="first_name">
-                    <label for="last_name">Last name:</label>
-                    <input class="form-control" type="text" name="last_name" id="last_name">
-                    <label for="email">Contact email:</label>
-                    <input class="form-control" type="text" name="email" id="email">
-                    <label for="address1">Address:</label>
-                    <input class="form-control" type="text" name="address1" id="address1">
-                    <label for="city">City:</label>
-                    <input class="form-control" type="text" name="city" id="city"><br>
-                    <label for="state">State:</label>
-                    <select name="state" id="state">
-                        <option value="">Choose</option>
-                        {% for state in state %}
-                            <option value="{{state.id}}">{{state.name}}</option>
-                        {% endfor %}
-                    </select><br>
-                    <label for="password">Password:</label>
-                    <input class="form-control" type="password" name="password" id="password">
-                    <label for="confirm_password">Confirm Password:</label>
-                    <input class="form-control" type="password" name="confirm_password" id="confirm_password">
-                    <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Register">Register</button>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="org_name">Org name:</label>
+                            <input class="form-control" type="text" name="org_name" id="org_name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="first_name">First name:</label>
+                            <input class="form-control" type="text" name="first_name" id="first_name">
+                        </div>
+                        <div class="col-6">
+                            <label for="last_name">Last name:</label>
+                            <input class="form-control" type="text" name="last_name" id="last_name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="email">Contact email:</label>
+                            <input class="form-control" type="text" name="email" id="email">
+                            <label for="address1">Address:</label>
+                            <input class="form-control" type="text" name="address1" id="address1">
+                            <label for="city">City:</label>
+                            <input class="form-control" type="text" name="city" id="city"><br>
+                            <label for="state">State:</label>
+                            <select class="form-control" name="state" id="state">
+                                <option value="">Choose</option>
+                                {% for state in state %}
+                                    <option value="{{state.id}}">{{state.name}}</option>
+                                {% endfor %}
+                            </select><br>
+                            <label for="password">Password:</label>
+                            <input class="form-control" type="password" name="password" id="password">
+                            <label for="confirm_password">Confirm Password:</label>
+                            <input class="form-control" type="password" name="confirm_password" id="confirm_password">
+                            <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Register">Register</button>
+                        </div>
+                    </div>
                 </div>
             </form>
-            <a href="{% url 'devs:register' %}">Need to Sign up on Developer</a>&nbsp&nbsp&nbsp&nbsp&nbsp
-            <a href="{% url 'devs:login' %}">Dev Login</a>&nbsp&nbsp&nbsp&nbsp&nbsp
-            <a href="{% url 'orgs:login' %}">Org Login</a>
+            <div class="floatmiddle">
+                <a href="{% url 'devs:register' %}">Need to Sign up as a Developer?</a>
+            </div>
         </div>
 {% endblock %}
 {% block footer %}
