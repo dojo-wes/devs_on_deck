@@ -1,0 +1,39 @@
+{% extends './layout.html' %}
+{% block title %}Developer Registration{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<h2>Add Your Skills</h2>
+<h4>Pick Your Top 5 Languages</h4>
+<p><progress max="100" value="33"></progress></p>
+<form action="{% url 'devs:languageprocess' %}" method='POST'>
+    {% csrf_token %}
+        {% for language in language|dictsort:"name" %}
+            <input type="checkbox" id="{{language.id}}" name="language" value="{{language.id}}"><label>{{language.name}}</label>
+        {% endfor %}
+    
+    <label for="short_bio">Short Bio</label>
+    <textarea "rows="20" cols="30" name="short_bio" id="short_bio"></textarea>
+    <p><input type="submit" name='submit' value="NEXT STEP: Frameworks & Libraries"></p>
+</form>
+    
+
+<div class="picked_lang">
+    <h4>Your Top 5 Languages:</h4>
+</div>
+
+<a href="{% url 'devs:frameworks' %}">Skip This Step</a>
+
+<p>**Link for Admin to add language: <a href="{% url 'devs:add_lang' %}" class='button'>Add New Language**</a></p>
+{% endblock %}
+{% block footer %}
+{% endblock %}

@@ -76,3 +76,81 @@ class Developer(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     object= DeveloperManager()
+
+
+
+class LanguageManager(models.Manager):
+    #adds bio to Developer
+    def add_bio(self, form, user_id):
+        print "added lang,bio"
+        user = Developer.objects.get(id=user_id)
+        if len(form['short_bio']) > 0:
+            bio=self.create(short_bio=form['short_bio'], developer=user)
+            return bio
+    '''
+    def choose_languages(self, form, user_id, language_id):
+        user = Developer.objects.get(id=user_id)
+        all_languages = AllLanguage.objects.all()
+    #playing around with this logic in views.py but ideally will move it over to models to create the Language object
+    '''
+
+class Language(models.Model):
+    lang_1=models.IntegerField()
+    lang_2=models.IntegerField()
+    lang_3=models.IntegerField()
+    lang_4=models.IntegerField()
+    lang_5=models.IntegerField()
+    short_bio=models.TextField(max_length=500, blank=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    developer=models.ForeignKey(Developer, related_name="dev_lang")
+    objects= LanguageManager()
+
+
+class AllLanguageManager(models.Manager):
+    #used by admin to add all languages to checkboxs for user to choose from
+    def create_lang(self, form):
+        error=[]
+
+        if len(form['language']) == 0: 
+            error.append("Language is blank")
+        
+        language=self.filter(name=form['language'])
+        if len(language) > 0:
+            error.append("This language already exists")
+        
+        if len(error) > 0:
+            return error
+        else:
+            language=self.create(name=form['language'])
+            return language
+
+class AllLanguage(models.Model):
+    name=models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    objects= AllLanguageManager()
+
+
+
+'''
+class Language(models.Model):
+    short_bio=models.TextField(max_length=500, blank=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    developer=models.ForeignKey(Developer, related_name="dev_lang")
+    objects= LanguageManager()
+
+class FrameworkManager(models.Manager):
+    def add_framework(self, form, user_id):
+        print "added frame"
+
+        user = Developer.objects.get(id=user_id)
+
+class Framework(models.Model):
+    #name=models.CharField(max_length=255, blank=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    developer=models.ForeignKey(Developer, related_name='dev_frame')
+    objects=FrameworkManager()
+'''
