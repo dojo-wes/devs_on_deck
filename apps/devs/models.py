@@ -103,21 +103,6 @@ class AllLanguage(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     objects= AllLanguageManager()
-'''
-class Language(models.Model):
-    lang_1=AllLanguage.objects.get(id=lang_id)
-    lang_2=AllLanguage.objects.get(id=lang_id)
-    lang_3=AllLanguage.objects.get(id=lang_id)
-    lang_4=AllLanguage.objects.get(id=lang_id)
-    lang_5=AllLanguage.objects.get(id=lang_id)
-    short_bio=models.TextField(max_length=500, blank=True)
-    created_at=models.DateTimeField(auto_now_add=True)
-    updated_at=models.DateTimeField(auto_now=True)
-    all_languages=models.ForeignKey(AllLanguage, related_name="languages")
-    developer=models.ForeignKey(Developer, related_name="dev_lang")
-    objects= LanguageManager()
-    
-'''
 
 class LanguageManager(models.Manager):
     #adds bio to Developer
@@ -127,8 +112,6 @@ class LanguageManager(models.Manager):
 
         error = []
         selected_languages = form.getlist('language')
-        for language in selected_languages:
-            print language
 
         if len(form['short_bio']) < 1:
             error.append("Bio is blank. To skip this step, click Skip This Step")

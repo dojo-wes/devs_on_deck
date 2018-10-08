@@ -70,6 +70,11 @@ def languageprocess(request):
         else:
             dev_lang = error
 
+        print dev_lang.id
+        print dev_lang.short_bio
+        print dev_lang.lang_1
+
+
         selected_languages = request.POST.getlist('language')
 
         lang1 = AllLanguage.objects.get(id=selected_languages[0])
@@ -93,31 +98,35 @@ def languageprocess(request):
 
         print "-" * 30
 
-        test = Language.objects.get(id=user)
-        print test.developer.first_name
-
         return redirect('devs:frameworks')
         
 
 def frameworks(request):
-    user = request.session['user_id']
-    user_bio = Language.objects.get(id=user)
-    print user_bio.short_bio
-    #if len(user_bio.short_bio) == 0:
-    #request.POST['short_bio']
+    user = Developer.object.get(id=request.session['user_id'])
+    user_bio = Language.objects.get(id=request.session['user_id'])
+
+
+    print user_bio.lang_1
+    print user_bio.lang_2
+    print user_bio.lang_3
+    print user_bio.lang_4
+    print user_bio.lang_5
+
+    test = AllLanguage.objects.all()
+    for item in test:
+        print item.languages.name
+
     bio_message = "Developers with a complete profile have a much higher chance of being considered for a position. Up your style and complete your profile."
     
-
-    if len(user_bio.short_bio) == 0:
-       progress = '33'
-    else:
+    if len(user_bio.short_bio) != 0:
         progress = '66'
-        
+    else:
+        progress = '33'
+    
     context = {
         'user_bio': user_bio,
         'bio_message': bio_message,
         'progress': progress,
-        #'error': error
         }
     return render(request, 'devs/frameworks.html', context)
    
@@ -162,8 +171,8 @@ def create_framework(request):
         return redirect("devs:add_framework")
 
 def logout(request):
-    if request.method == "POST":
-        request.session.clear()
-        return redirect("devs:index")
-    else:
-        return render(request, "devs/developers.html")
+    #if request.method == "POST":
+    request.session.clear()
+    return redirect("devs:register")
+    #else:
+    #    return render(request, "devs/developers.html")
