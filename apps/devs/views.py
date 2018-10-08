@@ -103,7 +103,7 @@ def languageprocess(request):
 
 def frameworks(request):
     user = Developer.object.get(id=request.session['user_id'])
-    user_bio = Language.objects.get(id=request.session['user_id'])
+    user_bio = Language.objects.get(developer=request.session['user_id'])
 
 
     print user_bio.lang_1
