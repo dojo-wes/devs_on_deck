@@ -19,13 +19,12 @@
     {% csrf_token %}
     <a href=''></a>
     <h5><label for="short_bio">Short Bio:</label></h5>
-    <p><textarea rows="10" cols="30" name="short_bio" id="short_bio"></textarea></p>
-    <p>{{short_bio}}</p>
+    <p><textarea rows="10" cols="30" name="short_bio" id="short_bio">{{user_bio.short_bio}}</textarea></p>
     <p>{{bio_message}}</p>
     <input type="button" name='submit' value="COMPLETE PROFILE">
 </form>
 
-
+<p>**Link for Admin to add language: <a href="{% url 'devs:add_framework' %}" class='button'>Add New Language**</a></p>
 
 {% endblock %}
 {% block footer %}

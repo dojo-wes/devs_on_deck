@@ -11,7 +11,7 @@
         {% endfor %}
     </ul>
 {% endif %}
-
+<a href="{% url 'devs:logout' %}" class="button">Logout</a>
 <h2>Add Your Skills</h2>
 <h4>Pick Your Top 5 Languages</h4>
 <p><progress max="100" value="33"></progress></p>
@@ -29,11 +29,13 @@
 <p>{{error}}</p>
 <div class="picked_lang">
     <h4>Your Top 5 Languages:</h4>
+    <p>{{lang1.name}}</p>
 </div>
 
 <a href="{% url 'devs:frameworks' %}">Skip This Step</a>
 
 <p>**Link for Admin to add language: <a href="{% url 'devs:add_lang' %}" class='button'>Add New Language**</a></p>
+
 {% endblock %}
 {% block footer %}
 {% endblock %}

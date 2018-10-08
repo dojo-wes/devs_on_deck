@@ -55,19 +55,36 @@ def loginprocess(request):
 def languages(request):
 
     context={
-        "language": AllLanguage.objects.all(),
+        "language": AllLanguage.objects.all()
     }
     return render(request,'devs/languages.html', context)
 
 def languageprocess(request):
     if request.method == 'POST':
         user = request.session['user_id']
-        dev_lang = Language.objects.add_bio_and_langs(request.POST, request.session['user_id'])    
-        print dev_lang.short_bio
-        print dev_lang.lang_1
-        print "*" * 30
-        
+        error = Language.objects.add_bio_and_langs(request.POST, request.session['user_id'])    
+        if type(error) == list:
+            for err in error:
+                messages.error(request, err)
+                return redirect("devs:languages")
+        else:
+            dev_lang = error
+
         selected_languages = request.POST.getlist('language')
+
+        lang1 = AllLanguage.objects.get(id=selected_languages[0])
+        lang2 = AllLanguage.objects.get(id=selected_languages[1])
+        lang3 = AllLanguage.objects.get(id=selected_languages[2])
+        lang4 = AllLanguage.objects.get(id=selected_languages[3])
+        lang5 = AllLanguage.objects.get(id=selected_languages[4])
+        
+        print lang1.name
+        print lang2.name
+        print lang3.name
+        print lang4.name
+        print lang5.name
+
+        print "*" * 30
 
         all_languages = AllLanguage.objects.all()
         for language in all_languages:
@@ -76,45 +93,39 @@ def languageprocess(request):
 
         print "-" * 30
 
-        for select_lang in selected_languages:
-            print select_lang
-        
-        #doesn't work:
-        if language.id == select_lang:
-            print "match!"
-
         test = Language.objects.get(id=user)
         print test.developer.first_name
-       
-       
+
         return redirect('devs:frameworks')
         
 
 def frameworks(request):
-    #user_bio = request.POST['short_bio']
+    user = request.session['user_id']
+    user_bio = Language.objects.get(id=user)
+    print user_bio.short_bio
+    #if len(user_bio.short_bio) == 0:
+    #request.POST['short_bio']
     bio_message = "Developers with a complete profile have a much higher chance of being considered for a position. Up your style and complete your profile."
     
-    #if request.POST['short_bio']:
-    progress = '66'
-    #else:
-    #    progress = '33'
-    
+
+    if len(user_bio.short_bio) == 0:
+       progress = '33'
+    else:
+        progress = '66'
+        
     context = {
-        #'user_bio': user_bio,
+        'user_bio': user_bio,
         'bio_message': bio_message,
         'progress': progress,
         #'error': error
         }
     return render(request, 'devs/frameworks.html', context)
-
-
    
 def frameworksprocess(request):
     if request.method == 'POST':
         #new_frame = Framework.objects.add_framework(request.POST, request.session['user_id'])
         print new_frame
         return redirect('devs:dashboard')
-
 
 def add_lang(request):
     return render(request, 'devs/add_lang.html')
@@ -132,6 +143,23 @@ def create_lang(request):
             return redirect("devs:languages")
     else:
         return redirect("devs:add_lang")
+
+def add_framework(request):
+    return render(request, 'devs/add_framework.html')
+
+def create_framework(request):
+    if request.method == "POST":
+        framework=AllFramework.objects.create_framework(request.POST)
+        if type(framework) == list:
+            for err in framework:
+                messages.error(request, err)
+            return redirect("devs:add_framework")
+        else:
+            print framework.name
+            print framework.id
+            return redirect("devs:frameworks")
+    else:
+        return redirect("devs:add_framework")
 
 def logout(request):
     if request.method == "POST":
