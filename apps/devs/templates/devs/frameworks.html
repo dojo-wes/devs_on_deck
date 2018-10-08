@@ -18,8 +18,8 @@
 <form action="{% url 'devs:frameworksprocess' %}" method='POST'>
     {% csrf_token %}
     <a href=''></a>
-    <label for="bio">Short Bio</label>
-    <input type="textarea" name="bio" id="bio">
+    <h5><label for="short_bio">Short Bio:</label></h5>
+    <p><textarea rows="10" cols="30" name="short_bio" id="short_bio"></textarea></p>
     <p>{{short_bio}}</p>
     <p>{{bio_message}}</p>
     <input type="button" name='submit' value="COMPLETE PROFILE">

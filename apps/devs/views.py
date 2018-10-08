@@ -27,6 +27,7 @@ def create(request):
                 messages.error(request, err)
             return redirect("devs:index")
         else:
+            request.session['user_id'] = dev.id
             return redirect("devs:languages")
     else:
         return redirect("devs:index")
@@ -61,37 +62,31 @@ def languages(request):
 def languageprocess(request):
     if request.method == 'POST':
         user = request.session['user_id']
-        new_bio = Language.objects.add_bio(request.POST, request.session['user_id'])    
-        print new_bio
-        #picked_languages = Language.objects.choose_languages(request.POST, request.session['user_id'], language_id)
-        #print picked_languages
-       
-        #this works to retrieve language ids selected with checkboxes
-        selected_languages = request.POST.getlist('language')
-        for language in selected_languages:
-            print language #will be id because form value is language.id
-        
+        dev_lang = Language.objects.add_bio_and_langs(request.POST, request.session['user_id'])    
+        print dev_lang.short_bio
+        print dev_lang.lang_1
         print "*" * 30
-
-        #this works to retrieve all language ids from AllLanguages
-        all_languages = AllLanguage.objects.all()
-        for lang in all_languages:
-            print lang.id 
-
-        #need to figure out the logic to match up the ids and save them to the variables in the Language class which is connected to the developer. Ideally this happens in models.py once Language.objects.choose_languages method works above. 
-
-        '''
-        lang_list = []
-        for language in selected_languages:
-            for lang in all_languages:
-                if language == lang.id:
-                    lang_list.append(language)
-                    print lang_list
         
-                    if lang_list == 5:
-                        Language.objects.create(lang_1=language[0], lang_2=language[1], lang_3=language[2], lang_4=language[3], lang_5=language[4], short_bio=request.POST['short_bio'], developer=user)
-                        print lang_list
-        '''            
+        selected_languages = request.POST.getlist('language')
+
+        all_languages = AllLanguage.objects.all()
+        for language in all_languages:
+            print language.id
+            print language.name
+
+        print "-" * 30
+
+        for select_lang in selected_languages:
+            print select_lang
+        
+        #doesn't work:
+        if language.id == select_lang:
+            print "match!"
+
+        test = Language.objects.get(id=user)
+        print test.developer.first_name
+       
+       
         return redirect('devs:frameworks')
         
 
@@ -108,6 +103,7 @@ def frameworks(request):
         #'user_bio': user_bio,
         'bio_message': bio_message,
         'progress': progress,
+        #'error': error
         }
     return render(request, 'devs/frameworks.html', context)
 

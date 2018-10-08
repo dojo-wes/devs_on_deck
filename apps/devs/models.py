@@ -81,25 +81,26 @@ class Developer(models.Model):
 
 class LanguageManager(models.Manager):
     #adds bio to Developer
-    def add_bio(self, form, user_id):
+    def add_bio_and_langs(self, form, user_id):
         print "added lang,bio"
-        user = Developer.objects.get(id=user_id)
+        user = Developer.object.get(id=user_id)
+
+        selected_languages = form.getlist('language')
+        for language in selected_languages:
+            print language
+
         if len(form['short_bio']) > 0:
-            bio=self.create(short_bio=form['short_bio'], developer=user)
-            return bio
-    '''
-    def choose_languages(self, form, user_id, language_id):
-        user = Developer.objects.get(id=user_id)
-        all_languages = AllLanguage.objects.all()
-    #playing around with this logic in views.py but ideally will move it over to models to create the Language object
-    '''
+            dev_lang=self.create(lang_1=selected_languages[0], lang_2=selected_languages[1], lang_3=selected_languages[2], lang_4=selected_languages[3], lang_5=selected_languages[4], short_bio=form['short_bio'], developer=user)
+            return dev_lang
+
+
 
 class Language(models.Model):
-    lang_1=models.IntegerField()
-    lang_2=models.IntegerField()
-    lang_3=models.IntegerField()
-    lang_4=models.IntegerField()
-    lang_5=models.IntegerField()
+    lang_1=models.IntegerField(null=True)
+    lang_2=models.IntegerField(null=True)
+    lang_3=models.IntegerField(null=True)
+    lang_4=models.IntegerField(null=True)
+    lang_5=models.IntegerField(null=True)
     short_bio=models.TextField(max_length=500, blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
