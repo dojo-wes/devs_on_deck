@@ -76,3 +76,120 @@ class Developer(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     object= DeveloperManager()
+
+
+
+
+class AllLanguageManager(models.Manager):
+    #used by admin to add all languages to checkboxs for user to choose from
+    def create_lang(self, form):
+        error=[]
+
+        if len(form['language']) == 0: 
+            error.append("Language is blank")
+        
+        language=self.filter(name=form['language'])
+        if len(language) > 0:
+            error.append("This language already exists")
+        
+        if len(error) > 0:
+            return error
+        else:
+            language=self.create(name=form['language'])
+            return language
+
+class AllLanguage(models.Model):
+    name=models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    objects= AllLanguageManager()
+
+class LanguageManager(models.Manager):
+    #adds bio to Developer
+    def add_bio_and_langs(self, form, user_id):
+        print "added lang,bio"
+        user = Developer.object.get(id=user_id)
+
+        error = []
+        selected_languages = form.getlist('language')
+
+        if len(form['short_bio']) < 1:
+            error.append("Bio is blank. To skip this step, click Skip This Step")
+            return error 
+        if len(selected_languages) != 5:
+            error.append("Please choose 5 languages. To skip this step, click Skip This Step")
+            return error
+        else:
+            #dev_lang=self.create(lang_1=AllLanguage.objects.get(id=selected_languages[0], lang_2=AllLanguage.objects.get(id=selected_languages[1], lang_3=AllLanguage.objects.get(id=selected_languages[2], lang_4=AllLanguage.objects.get(id=selected_languages[3], lang_5=AllLanguage.objects.get(id=selected_languages[4], short_bio=form['short_bio'], developer=user)
+            #return dev_lang
+
+            dev_lang=self.create(lang_1=selected_languages[0], lang_2=selected_languages[1], lang_3=selected_languages[2], lang_4=selected_languages[3], lang_5=selected_languages[4], short_bio=form['short_bio'], developer=user)
+            return dev_lang
+
+class Language(models.Model):
+    lang_1=models.IntegerField(null=True)
+    lang_2=models.IntegerField(null=True)
+    lang_3=models.IntegerField(null=True)
+    lang_4=models.IntegerField(null=True)
+    lang_5=models.IntegerField(null=True)
+    short_bio=models.TextField(max_length=500, blank=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    all_languages=models.ForeignKey(AllLanguage, related_name="languages", null=True)
+    developer=models.ForeignKey(Developer, related_name="dev_lang")
+    objects= LanguageManager()
+
+
+class AllFrameworkManager(models.Manager):
+    #used by admin to add all languages to checkboxs for user to choose from
+    def create_framework(self, form):
+        error=[]
+
+        if len(form['framework']) == 0: 
+            error.append("Framework is blank")
+        
+        framework=self.filter(name=form['framework'])
+        if len(framework) > 0:
+            error.append("This framework already exists")
+        
+        if len(error) > 0:
+            return error
+        else:
+            framework=self.create(name=form['framework'])
+            return framework
+
+class AllFramework(models.Model):
+    name=models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    objects= AllFrameworkManager()
+
+
+class FrameworkManager(models.Manager):
+    def add_frameworks(self, form, user_id):
+        print "added frameworks"
+        user = Developer.object.get(id=user_id)
+
+        error = []
+        selected_frameworks = form.getlist('frameworks')
+        for framework in selected_frameworks:
+            print framework
+
+        if len(selected_frameworks) != 5:
+            error.append("Please choose 5 languages. To skip this step, click Skip This Step")
+            return error
+        else:
+            dev_frame=self.create(frame_1=selected_frameworks[0], frame_2=selected_frameworks[1], lang_3=selected_frameworks[2], lang_4=selected_frameworks[3], lang_5=selected_frameworks[4], developer=user)
+            return dev_frame
+
+class Framework(models.Model):
+    frame_1=models.IntegerField(null=True)
+    frame_2=models.IntegerField(null=True)
+    frame_3=models.IntegerField(null=True)
+    frame_4=models.IntegerField(null=True)
+    frame_5=models.IntegerField(null=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    all_frameworks=models.ForeignKey(AllFramework, related_name="frameworks", null=True)
+    developer=models.ForeignKey(Developer, related_name="dev_frame")
+    objects= FrameworkManager()

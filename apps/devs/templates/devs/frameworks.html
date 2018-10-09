@@ -1,0 +1,38 @@
+{% extends './layout.html' %}
+{% block title %}Developer Registration{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<a href="{% url 'devs:logout' %}" class="button">Logout</a>
+<a href="{% url 'devs:languages' %}" class="button">Back</a>
+<h2>Add Your Skills</h2>
+<h4>Pick Your Top 5 Frameworks or Libraries</h4>
+<progress max="100" value="{{progress}}"></progress>
+
+
+<h6>Your Top 5 Languages: {{user_bio.lang_1}}, {{user_bio.lang_2}}, {{user_bio.lang_3}}, {{user_bio.lang_4}}, {{user_bio.lang_5}}, </h6>
+<form action="{% url 'devs:frameworksprocess' %}" method='POST'>
+    {% csrf_token %}
+    <a href=''></a>
+    <h5>Your Bio:</h5>
+    <p>{{user_bio.short_bio }}</p>
+    {% if not user_bio.short_bio %}
+        {{bio_message}}
+    {% endif%}
+    <!--<p><textarea rows="10" cols="30" name="short_bio" id="short_bio">{{user_bio.short_bio}}</textarea></p>-->
+    <input type="button" name='submit' value="COMPLETE PROFILE">
+</form>
+
+<p>**Link for Admin to add language: <a href="{% url 'devs:add_framework' %}" class='button'>Add New Language**</a></p>
+
+{% endblock %}
+{% block footer %}
+{% endblock %}

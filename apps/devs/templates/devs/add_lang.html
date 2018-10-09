@@ -1,0 +1,25 @@
+{% extends './layout.html' %}
+{% block title %}Developer Registration{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+    <a href="{% url 'devs:languages' %}" class="button">Back</a>
+    <h1>Add Language</h1>
+    <form action="{% url 'devs:create_lang' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="language">
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}
+{% block footer %}
+{% endblock %}
